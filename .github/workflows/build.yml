@@ -4,6 +4,9 @@ on:
   push:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,10 +25,20 @@ jobs:
       - name: Build
         run: |
           set +e
-          ls -la > build.log
-          gradle build --no-daemon --console=plain >> build.log 2>&1
+          gradle build --no-daemon --console=plain > build.log 2>&1
           code=$?
           echo '## Build log (last 70 lines)' >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
           tail -n 70 build.log >> $GITHUB_STEP_SUMMARY
+          echo '--- build/libs ---' >> $GITHUB_STEP_SUMMARY
+          ls -la build/libs >> $GITHUB_STEP_SUMMARY 2>&1
           echo '```' >> $GITHUB_STEP_SUMMARY
+          exit $code
+
+      - name: Publish jar to Releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          JAR=$(ls build/libs/*.jar | grep -v -- '-sources' | head -n 1)
+          echo "Using $JAR"
+          gh release create "build-${{ github.run_number }}" "$JAR" --title "Primitive build ${{ github.run_number }}" --notes "Fabric 1.21.11 mod jar"
