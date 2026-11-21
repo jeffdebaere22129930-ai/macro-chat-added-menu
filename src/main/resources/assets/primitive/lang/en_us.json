@@ -1,0 +1,8 @@
+{
+  "key.category.primitive.main": "Primitive",
+  "key.primitive.gui": "Open GUI",
+  "key.primitive.record": "Record / Stop Recording",
+  "key.primitive.record_mod": "Record: 2nd Key (optional)",
+  "key.primitive.play": "Play / Stop Macro",
+  "key.primitive.play_mod": "Play: 2nd Key (optional)"
+}

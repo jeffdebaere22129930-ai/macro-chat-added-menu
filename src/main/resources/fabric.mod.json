@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "primitive",
+  "version": "${version}",
+  "name": "Primitive",
+  "description": "Record, save and replay input macros with a clean in-game GUI.",
+  "authors": ["Primitive"],
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["com.primitive.PrimitiveClient"]
+  },
+  "depends": {
+    "fabricloader": ">=0.17.0",
+    "minecraft": "~1.21.11",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
